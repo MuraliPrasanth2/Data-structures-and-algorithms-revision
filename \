@@ -1,0 +1,105 @@
+class Node {
+	constructor(value, next = null) {
+		this.value = value;
+		this.next = next;
+	}
+}
+
+class LinkedList {
+	constructor() {
+		this.head = null;
+		this.tail = null;
+		this.length = 0;
+	}
+
+	push(value) {
+		const newNode = new Node(value);
+
+		if (this.isEmpty()) {
+			this.head = this.tail = newNode;
+		} else {
+			this.tail.next = newNode;
+			this.tail = newNode;
+		}
+		this.length++;
+	}
+
+	unshift(value) {
+		const newNode = new Node(value);
+
+		if (this.isEmpty()) {
+			this.head = this.tail = newNode;
+		} else {
+			newNode.next = this.head;
+			this.head = newNode;
+		}
+
+		this.length++;
+	}
+
+	shift() {
+		if (this.isEmpty()) {
+			return;
+		}
+
+		const prevHead = this.head;
+
+		if (this.length === 1) {
+			this.head = this.tail = null;
+		} else {
+			this.head = this.head.next;
+			prevHead.next = null;
+		}
+
+		this.length--;
+		return prevHead.value;
+	}
+
+	pop() {
+		if (isEmpty()) {
+			return;
+		}
+
+		const prevToTail = this.getPrev(this.tail);
+		const prevTail = this.tail;
+
+		if (this.length === 1) {
+			this.head = this.tail = null;
+		} else {
+			prevToTail.next = null;
+			this.tail = prevToTail;
+		}
+
+		this.length--;
+		return prevTail.value;
+	}
+
+	getPrev(node) {
+		let prev = null;
+		let current = this.head;
+
+		while (node != current) {
+			if (!current.next) {
+				return null;
+			}
+			prev = current;
+			current = current.next;
+		}
+
+		return prev;
+	}
+
+	isEmpty() {
+		return this.head === null;
+	}
+}
+
+const linkedList = new LinkedList();
+linkedList.push(2);
+linkedList.unshift(1);
+linkedList.shift();
+linkedList.shift();
+console.log(linkedList);
+linkedList.push(2);
+linkedList.unshift(1);
+linkedList.pop();
