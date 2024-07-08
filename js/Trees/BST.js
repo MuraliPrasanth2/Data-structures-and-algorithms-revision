@@ -61,6 +61,39 @@ class BST {
 	isEmpty() {
 		return this.root === null;
 	}
+
+	rContains(value, currentNode = this.root) {
+		if (currentNode === null) {
+			return false;
+		}
+
+		if (value === currentNode.value) {
+			return true;
+		}
+
+		if (value < currentNode.value) {
+			return this.rContains(value, currentNode.left);
+		} else {
+			return this.rContains(value, currentNode.right);
+		}
+	}
+
+	rInsert(value, currentNode = this.root) {
+		if (!this.root) {
+			this.root = new Node(value);
+			return;
+		}
+
+		if (!currentNode) {
+			return new Node(value);
+		}
+
+		if (value < currentNode.value) {
+			currentNode.left = this.rInsert(value, currentNode.left);
+		} else {
+			currentNode.right = this.rInsert(value, currentNode.right);
+		}
+	}
 }
 
 console.clear();
@@ -74,3 +107,15 @@ bst.insert(52);
 bst.insert(82);
 console.log(bst.contains(52));
 console.log(bst.contains(22));
+console.log(bst.contains(82));
+console.log(bst.contains(2));
+console.log(bst.contains(21));
+
+const rbst = new BST();
+rbst.rInsert(47);
+rbst.rInsert(76);
+rbst.rInsert(21);
+rbst.rInsert(18);
+rbst.rInsert(27);
+rbst.rInsert(52);
+rbst.rInsert(82);
