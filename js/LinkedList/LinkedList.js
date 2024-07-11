@@ -346,32 +346,10 @@ class LinkedList {
 		}
 	}
 
-	// selectionSort() {
-	//     if (this.length < 2) {
-	//         return;
-	//         //the list is already sorted.
-	//     }
-	//
-	//     let current = this.head;
-	//     while (current.next) {
-	//         let smallest = current;
-	//         let innerCurrent = current.next;
-	//         while (innerCurrent != null) {
-	//             if (innerCurrent.value < smallest.value) {
-	//                 smallest = innerCurrent;
-	//             }
-	//             innerCurrent = innerCurrent.next;
-	//         }
-	//         if (smallest != current) {
-	//             this.#swap(smallest, current);
-	//         }
-	//         current = current.next;
-	//     }
-	// }
-
 	selectionSort() {
 		if (this.length < 2) {
 			return;
+			//the list is already sorted.
 		}
 
 		let current = this.head;
@@ -384,7 +362,6 @@ class LinkedList {
 				}
 				innerCurrent = innerCurrent.next;
 			}
-
 			if (smallest != current) {
 				this.#swap(smallest, current);
 			}
@@ -397,8 +374,35 @@ class LinkedList {
 			return;
 		}
 
-		let sortedListHead = this.head;
-		let unSortedListHead = this.head.next;
+		let dummyHead = new Node(0);
+		dummyHead.next = this.head;
+
+		let prev = null;
+		let current = this.head;
+		while (current != null) {
+			if (prev) {
+				if (prev.value > current.value) {
+					this.#insertInCorrectPlace(dummyHead, prev, current);
+					current = prev.next;
+					continue;
+				}
+			}
+			prev = current;
+			current = current.next;
+		}
+		this.head = dummyHead.next;
+	}
+
+	#insertInCorrectPlace(dummyHead, nodeToInsertPrev, nodeToInsert) {
+		let prev = dummyHead;
+		let current = dummyHead.next;
+		while (current.value <= nodeToInsert.value) {
+			prev = current;
+			current = current.next;
+		}
+		nodeToInsertPrev.next = nodeToInsert.next;
+		prev.next = nodeToInsert;
+		nodeToInsert.next = current;
 	}
 
 	#swap(node1, node2) {
@@ -483,3 +487,13 @@ linkedList3.push(1);
 linkedList3.print();
 linkedList3.selectionSort();
 linkedList3.print();
+
+const linkedList4 = new LinkedList();
+linkedList4.push(5);
+linkedList4.push(4);
+linkedList4.push(3);
+linkedList4.push(2);
+linkedList4.push(1);
+linkedList4.print();
+linkedList4.insertionSort();
+linkedList4.print();
