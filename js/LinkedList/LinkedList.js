@@ -405,6 +405,41 @@ class LinkedList {
 		nodeToInsert.next = current;
 	}
 
+	merge(otherList) {
+		let current1 = this.head;
+		let current2 = otherList.head;
+
+		const dummyHead = new Node(0);
+		let current = dummyHead;
+		while (current1 && current2) {
+			if (current1.value < current2.value) {
+				current.next = current1;
+				current = current.next;
+				current1 = current1.next;
+			} else {
+				current.next = current2;
+				current = current.next;
+				current2 = current2.next;
+			}
+		}
+
+		while (current1) {
+			current.next = current1;
+			current = current.next;
+			this.tail = current1;
+			current1 = current1.next;
+		}
+
+		while (current2) {
+			current.next = current2;
+			current = current.next;
+			this.tail = current2;
+			current2 = current2.next;
+		}
+
+		this.head = dummyHead.next;
+	}
+
 	#swap(node1, node2) {
 		const temp = node1.value;
 		node1.value = node2.value;
