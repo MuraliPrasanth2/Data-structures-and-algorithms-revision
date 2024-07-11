@@ -1,331 +1,432 @@
 class Node {
-    constructor(value, next = null) {
-        this.value = value;
-        this.next = next;
-    }
+	constructor(value, next = null) {
+		this.value = value;
+		this.next = next;
+	}
+
+	toString() {
+		return this.value;
+	}
 }
 
 class LinkedList {
-    constructor() {
-        this.head = null;
-        this.tail = null;
-        this.length = 0;
-    }
+	constructor() {
+		this.head = null;
+		this.tail = null;
+		this.length = 0;
+	}
 
-    push(value) {
-        const newNode = new Node(value);
+	push(value) {
+		const newNode = new Node(value);
 
-        if (this.isEmpty()) {
-            this.head = this.tail = newNode;
-        } else {
-            this.tail.next = newNode;
-            this.tail = newNode;
-        }
-        this.length++;
-        return this;
-    }
+		if (this.isEmpty()) {
+			this.head = this.tail = newNode;
+		} else {
+			this.tail.next = newNode;
+			this.tail = newNode;
+		}
+		this.length++;
+		return this;
+	}
 
-    unshift(value) {
-        const newNode = new Node(value);
+	unshift(value) {
+		const newNode = new Node(value);
 
-        if (this.isEmpty()) {
-            this.head = this.tail = newNode;
-        } else {
-            newNode.next = this.head;
-            this.head = newNode;
-        }
+		if (this.isEmpty()) {
+			this.head = this.tail = newNode;
+		} else {
+			newNode.next = this.head;
+			this.head = newNode;
+		}
 
-        this.length++;
-        return this;
-    }
+		this.length++;
+		return this;
+	}
 
-    shift() {
-        if (this.isEmpty()) {
-            return;
-        }
+	shift() {
+		if (this.isEmpty()) {
+			return;
+		}
 
-        const prevHead = this.head;
+		const prevHead = this.head;
 
-        if (this.length === 1) {
-            this.head = this.tail = null;
-        } else {
-            this.head = this.head.next;
-            prevHead.next = null;
-        }
+		if (this.length === 1) {
+			this.head = this.tail = null;
+		} else {
+			this.head = this.head.next;
+			prevHead.next = null;
+		}
 
-        this.length--;
-        return prevHead.value;
-    }
+		this.length--;
+		return prevHead.value;
+	}
 
-    pop() {
-        if (this.isEmpty()) {
-            return undefined;
-        }
+	pop() {
+		if (this.isEmpty()) {
+			return undefined;
+		}
 
-        const prevToTail = this.getPrev(this.tail);
-        const prevTail = this.tail;
+		const prevToTail = this.getPrev(this.tail);
+		const prevTail = this.tail;
 
-        if (this.length === 1) {
-            this.head = this.tail = null;
-        } else {
-            prevToTail.next = null;
-            this.tail = prevToTail;
-        }
+		if (this.length === 1) {
+			this.head = this.tail = null;
+		} else {
+			prevToTail.next = null;
+			this.tail = prevToTail;
+		}
 
-        this.length--;
-        return prevTail.value;
-    }
+		this.length--;
+		return prevTail.value;
+	}
 
-    getPrev(node) {
-        let prev = null;
-        let current = this.head;
+	getPrev(node) {
+		let prev = null;
+		let current = this.head;
 
-        while (node != current) {
-            if (!current.next) {
-                return null;
-            }
-            prev = current;
-            current = current.next;
-        }
+		while (node != current) {
+			if (!current.next) {
+				return null;
+			}
+			prev = current;
+			current = current.next;
+		}
 
-        return prev;
-    }
+		return prev;
+	}
 
-    get(index) {
-        if (index < 0 || index >= this.length) {
-            return null;
-        }
+	get(index) {
+		if (index < 0 || index >= this.length) {
+			return null;
+		}
 
-        let current = this.head;
-        for (let i = 0; i < index; i++) {
-            current = current.next;
-        }
+		let current = this.head;
+		for (let i = 0; i < index; i++) {
+			current = current.next;
+		}
 
-        return current;
-    }
+		return current;
+	}
 
-    set(index, value) {
-        const node = this.get(index);
+	set(index, value) {
+		const node = this.get(index);
 
-        if (node) {
-            node.value = value;
-        }
-    }
+		if (node) {
+			node.value = value;
+		}
+	}
 
-    insert(index, value) {
-        if (index < 0 || index > this.length) {
-            return;
-        }
+	insert(index, value) {
+		if (index < 0 || index > this.length) {
+			return;
+		}
 
-        if (index === 0) {
-            return this.unshift(value);
-        }
+		if (index === 0) {
+			return this.unshift(value);
+		}
 
-        if (index === this.length) {
-            return this.push(value);
-        }
+		if (index === this.length) {
+			return this.push(value);
+		}
 
-        const prev = this.get(index - 1);
-        const newNode = new Node(value);
-        newNode.next = prev.next;
-        prev.next = newNode;
-        this.length++;
-        return this;
-    }
+		const prev = this.get(index - 1);
+		const newNode = new Node(value);
+		newNode.next = prev.next;
+		prev.next = newNode;
+		this.length++;
+		return this;
+	}
 
-    remove(index) {
-        if (index < 0 || index >= this.length) {
-            return;
-        }
+	remove(index) {
+		if (index < 0 || index >= this.length) {
+			return;
+		}
 
-        if (index === 0) {
-            return this.shift();
-        }
+		if (index === 0) {
+			return this.shift();
+		}
 
-        if (index === this.length - 1) {
-            return this.pop();
-        }
+		if (index === this.length - 1) {
+			return this.pop();
+		}
 
-        const before = this.get(index - 1);
-        const itemToRemove = before.next;
-        before.next = itemToRemove.next;
-        itemToRemove.next = null;
-        this.length--;
-        return itemToRemove.value;
-    }
+		const before = this.get(index - 1);
+		const itemToRemove = before.next;
+		before.next = itemToRemove.next;
+		itemToRemove.next = null;
+		this.length--;
+		return itemToRemove.value;
+	}
 
-    reverse() {
-        const tempHead = this.head;
-        this.head = this.tail;
-        this.tail = tempHead;
+	reverse() {
+		const tempHead = this.head;
+		this.head = this.tail;
+		this.tail = tempHead;
 
-        let prev = null;
-        let current = this.tail;
-        let next = current.next;
+		let prev = null;
+		let current = this.tail;
+		let next = current.next;
 
-        while (next) {
-            current.next = prev;
-            prev = current;
-            current = next;
-            next = next.next;
-        }
+		while (next) {
+			current.next = prev;
+			prev = current;
+			current = next;
+			next = next.next;
+		}
 
-        current.next = prev;
-    }
+		current.next = prev;
+	}
 
-    findMiddleNode() {
-        let fast = this.head;
-        let slow = this.head;
+	findMiddleNode() {
+		let fast = this.head;
+		let slow = this.head;
 
-        while (fast && fast.next) {
-            fast = fast.next.next;
-            slow = slow.next;
-        }
+		while (fast && fast.next) {
+			fast = fast.next.next;
+			slow = slow.next;
+		}
 
-        return slow;
-    }
+		return slow;
+	}
 
-    hasLoop() {
-        let slow = this.head;
-        let fast = this.head;
+	hasLoop() {
+		let slow = this.head;
+		let fast = this.head;
 
-        while (fast && fast.next) {
-            slow = slow.next;
-            fast = fast.next.next;
+		while (fast && fast.next) {
+			slow = slow.next;
+			fast = fast.next.next;
 
-            if (fast === slow) {
-                return true;
-            }
-        }
+			if (fast === slow) {
+				return true;
+			}
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    partitionList(x) {
-        let current = this.head;
-        let left = new Node(0);
-        let leftLast = left;
-        let right = new Node(0);
-        let rightLast = right;
+	partitionList(x) {
+		let current = this.head;
+		let left = new Node(0);
+		let leftLast = left;
+		let right = new Node(0);
+		let rightLast = right;
 
-        while (current) {
-            if (current.value < x) {
-                leftLast.next = current;
-                leftLast = current;
-            } else {
-                rightLast.next = current;
-                rightLast = current;
-            }
-            current = current.next;
-        }
+		while (current) {
+			if (current.value < x) {
+				leftLast.next = current;
+				leftLast = current;
+			} else {
+				rightLast.next = current;
+				rightLast = current;
+			}
+			current = current.next;
+		}
 
-        leftLast.next = right.next;
-        rightLast.next = null;
-        this.head = left.next;
+		leftLast.next = right.next;
+		rightLast.next = null;
+		this.head = left.next;
 
-        left.next = null;
-        right.next = null;
-    }
+		left.next = null;
+		right.next = null;
+	}
 
-    removeDuplicates() {
-        const uniqueValues = new Set();
-        let prev = null;
-        let current = this.head;
+	removeDuplicates() {
+		const uniqueValues = new Set();
+		let prev = null;
+		let current = this.head;
 
-        while (current) {
-            if (uniqueValues.has(current.value)) {
-                prev.next = current.next;
-                current.next = null;
-                current = prev.next;
-                this.length--;
-            } else {
-                uniqueValues.add(current.value);
-                prev = current;
-                current = current.next;
-            }
-        }
-    }
+		while (current) {
+			if (uniqueValues.has(current.value)) {
+				prev.next = current.next;
+				current.next = null;
+				current = prev.next;
+				this.length--;
+			} else {
+				uniqueValues.add(current.value);
+				prev = current;
+				current = current.next;
+			}
+		}
+	}
 
-    binaryToDecimal() {
-        let current = this.head;
-        let sum = 0;
+	binaryToDecimal() {
+		let current = this.head;
+		let sum = 0;
 
-        while (current) {
-            sum = sum * 2 + current.value;
-            current = current.next;
-        }
+		while (current) {
+			sum = sum * 2 + current.value;
+			current = current.next;
+		}
 
-        return sum;
-    }
+		return sum;
+	}
 
-    reverseBetween(m, n) {
-        if (this.head === null) {
-            return;
-        }
+	reverseBetween(m, n) {
+		if (this.head === null) {
+			return;
+		}
 
-        let dummy = new Node(0);
-        dummy.next = this.head;
+		let dummy = new Node(0);
+		dummy.next = this.head;
 
-        let leftPrev = dummy;
-        let left = this.head;
+		let leftPrev = dummy;
+		let left = this.head;
 
-        for (let i = 0; i < m; i++) {
-            leftPrev = current;
-            left = left.next;
-        }
+		for (let i = 0; i < m; i++) {
+			leftPrev = current;
+			left = left.next;
+		}
 
-        let prev = null;
-        let current = left;
-        for (let i = 0; i < n - m + 1; i++) {
-            const tempNext = current.next;
-            current.next = prev;
-            prev = current;
-            current = tempNext;
-        }
+		let prev = null;
+		let current = left;
+		for (let i = 0; i < n - m + 1; i++) {
+			const tempNext = current.next;
+			current.next = prev;
+			prev = current;
+			current = tempNext;
+		}
 
-        leftPrev.next = prev;
-        left.next = current;
-        this.head = dummy.next;
-    }
+		leftPrev.next = prev;
+		left.next = current;
+		this.head = dummy.next;
+	}
 
-    reverseBetweenMethod2(m, n) {
-        if (this.head === null) {
-            return null;
-        }
+	reverseBetweenMethod2(m, n) {
+		if (this.head === null) {
+			return null;
+		}
 
-        let prev = null;
-        let current = this.head;
+		let prev = null;
+		let current = this.head;
 
-        // moving the current pointer to the node that is located in the index denoted in m
-        for (let i = 0; i < m; i++) {
-            prev = current;
-            current = current.next;
-        }
+		// moving the current pointer to the node that is located in the index denoted in m
+		for (let i = 0; i < m; i++) {
+			prev = current;
+			current = current.next;
+		}
 
-        const beforeStart = prev;
-        const start = current;
-        // reversing each node from the from the node that is pointed by current pointer to the node the number of nodes calculated using the (n - m) + 1
-        const noOfNodesToReverse = n - m + 1;
-        for (let i = 0; i < noOfNodesToReverse; i++) {
-            const tempNext = current.next;
-            current.next = prev;
-            prev = current;
-            current = tempNext;
-        }
+		const beforeStart = prev;
+		const start = current;
+		// reversing each node from the from the node that is pointed by current pointer to the node the number of nodes calculated using the (n - m) + 1
+		const noOfNodesToReverse = n - m + 1;
+		for (let i = 0; i < noOfNodesToReverse; i++) {
+			const tempNext = current.next;
+			current.next = prev;
+			prev = current;
+			current = tempNext;
+		}
 
-        const end = current;
-        if (beforeStart != null) {
-            beforeStart.next = prev;
-        } else {
-            this.head = prev;
-        }
+		const end = current;
+		if (beforeStart != null) {
+			beforeStart.next = prev;
+		} else {
+			this.head = prev;
+		}
 
-        start.next = end;
-    }
+		start.next = end;
+	}
 
-    isEmpty() {
-        return this.head === null;
-    }
+	bubbleSort() {
+		if (this.length < 2) {
+			// the list is already sorted.
+			return;
+		}
+
+		let sortedUntil = null;
+		while (this.head.next != sortedUntil) {
+			let current = this.head;
+			while (current != this.tail && current.next != sortedUntil) {
+				if (current.value > current.next.value) {
+					this.#swap(current, current.next);
+				}
+				current = current.next;
+			}
+			sortedUntil = current;
+		}
+	}
+
+	// selectionSort() {
+	//     if (this.length < 2) {
+	//         return;
+	//         //the list is already sorted.
+	//     }
+	//
+	//     let current = this.head;
+	//     while (current.next) {
+	//         let smallest = current;
+	//         let innerCurrent = current.next;
+	//         while (innerCurrent != null) {
+	//             if (innerCurrent.value < smallest.value) {
+	//                 smallest = innerCurrent;
+	//             }
+	//             innerCurrent = innerCurrent.next;
+	//         }
+	//         if (smallest != current) {
+	//             this.#swap(smallest, current);
+	//         }
+	//         current = current.next;
+	//     }
+	// }
+
+	selectionSort() {
+		if (this.length < 2) {
+			return;
+		}
+
+		let current = this.head;
+		while (current.next) {
+			let smallest = current;
+			let innerCurrent = current.next;
+			while (innerCurrent != null) {
+				if (innerCurrent.value < smallest.value) {
+					smallest = innerCurrent;
+				}
+				innerCurrent = innerCurrent.next;
+			}
+
+			if (smallest != current) {
+				this.#swap(smallest, current);
+			}
+			current = current.next;
+		}
+	}
+
+	insertionSort() {
+		if (this.length < 2) {
+			return;
+		}
+
+		let sortedListHead = this.head;
+		let unSortedListHead = this.head.next;
+	}
+
+	#swap(node1, node2) {
+		const temp = node1.value;
+		node1.value = node2.value;
+		node2.value = temp;
+	}
+
+	print() {
+		if (this.isEmpty()) {
+			console.log("empty linked list");
+			return;
+		}
+		let current = this.head;
+		let linkedListAsString = "";
+		while (current) {
+			linkedListAsString += current.value;
+			if (current.next) {
+				linkedListAsString += " -> ";
+			}
+			current = current.next;
+		}
+		console.log("printing from head:", linkedListAsString);
+	}
+
+	isEmpty() {
+		return this.head === null;
+	}
 }
 
 console.clear();
@@ -362,3 +463,23 @@ console.log(linkedList);
 linkedList.push(1);
 linkedList.push(2);
 linkedList.push(3);
+
+const linkedList2 = new LinkedList();
+linkedList2.push(5);
+linkedList2.push(4);
+linkedList2.push(3);
+linkedList2.push(2);
+linkedList2.push(1);
+linkedList2.print();
+linkedList2.bubbleSort();
+linkedList2.print();
+
+const linkedList3 = new LinkedList();
+linkedList3.push(5);
+linkedList3.push(4);
+linkedList3.push(3);
+linkedList3.push(2);
+linkedList3.push(1);
+linkedList3.print();
+linkedList3.selectionSort();
+linkedList3.print();
