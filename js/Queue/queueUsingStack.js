@@ -1,59 +1,58 @@
 class Stack {
-	constructor() {
-		this.stackList = [];
-	}
+    constructor() {
+        this.stackList = [];
+    }
 
-	isEmpty() {
-		return this.stackList.length === 0;
-	}
+    isEmpty() {
+        return this.stackList.length === 0;
+    }
 
-	peek() {
-		if (this.isEmpty()) {
-			return null;
-		} else {
-			return this.stackList[this.stackList.length - 1];
-		}
-	}
+    peek() {
+        if (this.isEmpty()) {
+            return null;
+        } else {
+            return this.stackList[this.stackList.length - 1];
+        }
+    }
 
-	push(value) {
-		this.stackList.push(value);
-	}
+    push(value) {
+        this.stackList.push(value);
+    }
 
-	pop() {
-		if (this.isEmpty()) return null;
-		return this.stackList.pop();
-	}
+    pop() {
+        if (this.isEmpty()) return null;
+        return this.stackList.pop();
+    }
 }
 
 class MyQueue {
-	constructor() {
-		this.stack1 = new Stack();
-		this.stack2 = new Stack();
-	}
+    constructor() {
+        this.stack1 = new Stack();
+        this.stack2 = new Stack();
+    }
 
-	peek() {
-		return this.stack1.peek();
-	}
+    peek() {
+        return this.stack1.peek();
+    }
 
-	isEmpty() {
-		return this.stack1.isEmpty();
-	}
+    isEmpty() {
+        return this.stack1.isEmpty();
+    }
 
-	enqueue(value) {
-		while (!this.stack1.isEmpty()) {
-			this.stack2.push(this.stack1.pop());
-		}
+    enqueue(value) {
+        while (!this.stack1.isEmpty()) {
+            this.stack2.push(this.stack1.pop());
+        }
 
-		this.stack1.push(value);
+        this.stack1.push(value);
 
-		while (!this.stack2.isEmpty()) {
-			this.stack1.push(this.stack2.pop());
-		}
-	}
-
-	dequeue() {
-		return this.stack1.pop();
-	}
+        while (!this.stack2.isEmpty()) {
+            this.stack1.push(this.stack2.pop());
+        }
+    }
+    dequeue() {
+        return this.stack1.pop();
+    }
 }
 
 const queue = new MyQueue();

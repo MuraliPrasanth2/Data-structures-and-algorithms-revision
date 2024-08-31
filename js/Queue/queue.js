@@ -1,67 +1,67 @@
 class Node {
-	constructor(value, next = null) {
-		this.value = value;
-		this.next = next;
-	}
+    constructor(value, next = null) {
+        this.value = value;
+        this.next = next;
+    }
 }
 
 class Queue {
-	constructor() {
-		this.start = null;
-		this.end = null;
-		this.length = 0;
-	}
+    constructor() {
+        this.start = null;
+        this.end = null;
+        this.length = 0;
+    }
 
-	enqueue(value) {
-		const newNode = new Node(value);
-		if (this.isEmpty()) {
-			this.start = this.end = newNode;
-		} else {
-			this.end.next = newNode;
-			this.end = newNode;
-		}
+    enqueue(value) {
+        const newNode = new Node(value);
+        if (this.isEmpty()) {
+            this.start = this.end = newNode;
+        } else {
+            this.end.next = newNode;
+            this.end = newNode;
+        }
 
-		this.length++;
-	}
+        this.length++;
+    }
 
-	dequeue() {
-		if (this.isEmpty()) {
-			return;
-		}
+    dequeue() {
+        if (this.isEmpty()) {
+            return;
+        }
 
-		const nodeToRemove = this.start;
-		if (this.length === 1) {
-			this.start = this.end = null;
-		} else {
-			this.start = nodeToRemove.next;
-			nodeToRemove.next = null;
-		}
+        const nodeToRemove = this.start;
+        if (this.length === 1) {
+            this.start = this.end = null;
+        } else {
+            this.start = this.start.next;
+            nodeToRemove.next = null;
+        }
 
-		this.length--;
-		return nodeToRemove.value;
-	}
+        this.length--;
+        return nodeToRemove.value;
+    }
 
-	print() {
-		if (this.isEmpty()) {
-			console.log("Empty Queue!");
-			return;
-		}
+    print() {
+        if (this.isEmpty()) {
+            console.log("Empty Queue!");
+            return;
+        }
 
-		let queueAsString = "";
-		let current = this.start;
-		while (current) {
-			queueAsString += current.value;
-			if (current.next) {
-				queueAsString += "->";
-			}
-			current = current.next;
-		}
-		console.log(queueAsString);
-	}
+        let queueAsString = "";
+        let current = this.start;
+        while (current) {
+            queueAsString += current.value;
+            if (current.next) {
+                queueAsString += "->";
+            }
+            current = current.next;
+        }
+        console.log(queueAsString);
+    }
 
-	isEmpty() {
-		return this.start === null;
-	}
+    isEmpty() {
+        return this.start === null;
+    }
 }
 
 console.clear();

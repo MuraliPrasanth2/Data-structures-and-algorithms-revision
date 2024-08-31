@@ -1,101 +1,101 @@
 class Stack {
-	constructor() {
-		this.stackList = [];
-	}
+    constructor() {
+        this.stackList = [];
+    }
 
-	getStackList() {
-		return this.stackList;
-	}
+    getStackList() {
+        return this.stackList;
+    }
 
-	printStack() {
-		for (let i = this.stackList.length - 1; i >= 0; i--) {
-			console.log(this.stackList[i]);
-		}
-	}
+    printStack() {
+        for (let i = this.stackList.length - 1; i >= 0; i--) {
+            console.log(this.stackList[i]);
+        }
+    }
 
-	isEmpty() {
-		return this.stackList.length === 0;
-	}
+    isEmpty() {
+        return this.stackList.length === 0;
+    }
 
-	peek() {
-		if (this.isEmpty()) {
-			return null;
-		} else {
-			return this.stackList[this.stackList.length - 1];
-		}
-	}
+    peek() {
+        if (this.isEmpty()) {
+            return null;
+        } else {
+            return this.stackList[this.stackList.length - 1];
+        }
+    }
 
-	size() {
-		return this.stackList.length;
-	}
+    size() {
+        return this.stackList.length;
+    }
 
-	push(value) {
-		this.stackList.push(value);
-	}
+    push(value) {
+        this.stackList.push(value);
+    }
 
-	pop() {
-		if (this.isEmpty()) {
-			return null;
-		}
+    pop() {
+        if (this.isEmpty()) {
+            return null;
+        }
 
-		return this.stackList.pop();
-	}
+        return this.stackList.pop();
+    }
 
-	peek() {
-		if (this.stackList.length > 0) {
-			return this.stackList[this.stackList.length - 1];
-		}
-	}
+    peek() {
+        if (this.stackList.length > 0) {
+            return this.stackList[this.stackList.length - 1];
+        }
+    }
 }
 
 function reverseString(string) {
-	const stack = new Stack();
+    const stack = new Stack();
 
-	for (let i = 0; i < string.length; i++) {
-		stack.push(string[i]);
-	}
+    for (let i = 0; i < string.length; i++) {
+        stack.push(string[i]);
+    }
 
-	let reversedString = "";
-	while (!stack.isEmpty()) {
-		reversedString += stack.pop();
-	}
+    let reversedString = "";
+    while (!stack.isEmpty()) {
+        reversedString += stack.pop();
+    }
 
-	return reversedString;
+    return reversedString;
 }
 
 function isBalancedParentheses(input) {
-	const stack = new Stack();
-	for (let i = 0; i < input.length; i++) {
-		const char = input[i];
-		if (char === "(") {
-			stack.push(char);
-		} else {
-			if (stack.isEmpty()) {
-				return false;
-			}
-			stack.pop();
-		}
-	}
+    const stack = new Stack();
+    for (let i = 0; i < input.length; i++) {
+        const char = input[i];
+        if (char === "(") {
+            stack.push(char);
+        } else {
+            if (stack.isEmpty()) {
+                return false;
+            }
+            stack.pop();
+        }
+    }
 
-	return stack.isEmpty();
+    return stack.isEmpty();
 }
 
 function sortStack(stack) {
-	const tempStack = new Stack();
+    const tempStack = new Stack();
 
-	while (!stack.isEmpty()) {
-		const current = stack.pop();
+    while (!stack.isEmpty()) {
+        const current = stack.pop();
 
-		while (!tempStack.isEmpty() && tempStack.peek() > current) {
-			stack.push(tempStack.pop());
-		}
+        while (!tempStack.isEmpty() && tempStack.peek() > current) {
+            stack.push(tempStack.pop());
+        }
 
-		tempStack.push(current);
-	}
+        tempStack.push(current);
+    }
 
-	while (!tempStack.isEmpty()) {
-		stack.push(tempStack.pop());
-	}
+    while (!tempStack.isEmpty()) {
+        stack.push(tempStack.pop());
+    }
 }
 
 console.clear();
